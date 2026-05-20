@@ -11,7 +11,7 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        // 1. IMPORT ENVIRONMENT MAP
+        // IMPORT ENVIRONMENT MAP
         this.map = this.add.tilemap("level1");
         this.tileset = this.map.addTilesetImage("kenney_tilemap_packed", "tiles", 64, 64, 0, 1);
         
@@ -26,7 +26,7 @@ class Play extends Phaser.Scene {
         
         this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
-        // 2. INITIALIZE ACTOR GROUPS
+        // INITIALIZE ACTOR GROUPS
         this.guards = this.physics.add.group();
         this.saws = this.physics.add.group();
         this.hazards = this.physics.add.group();
@@ -37,17 +37,17 @@ class Play extends Phaser.Scene {
         this.lockBlocks = this.physics.add.staticGroup();
         this.flagsMap = {};
 
-        // 3. COMPILE TILED INTERACTIVES VIA MODULAR SPAWNER
+        // COMPILE TILED INTERACTIVES VIA MODULAR SPAWNER
         let leftmostLockX = Spawner.parseObjects(this);
 
-        // 4. INSTANTIATE PLAYER PREFAB CLASS
+        // INSTANTIATE PLAYER PREFAB CLASS
         const pSpawn = this.map.findObject("Spawns", obj => obj.name === "playerSpawn") || { x: 100, y: 100 };
         let pX = pSpawn.x + (pSpawn.width ? pSpawn.width / 2 : 0);
         let pY = pSpawn.y - (pSpawn.height ? pSpawn.height / 2 : 0);
         
         this.player = new Player(this, pX, pY);
 
-        // 5. SECURITY & ENEMY PHYSICS BARRIERS
+        // SECURITY & ENEMY PHYSICS BARRIERS
         this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.player, this.lockBlocks, this.tryUnlockBlock, null, this);
 
@@ -66,7 +66,7 @@ class Play extends Phaser.Scene {
             return this.lockBlocks.countActive() > 0 && this.player.y > (this.map.heightInPixels / 2);
         }, this);
 
-        // 6. DYNAMICALLY LOOP AND SPAWN FROM OBJECT LAYER
+        // DYNAMICALLY LOOP AND SPAWN FROM OBJECT LAYER
         const spawnObjects = this.map.getObjectLayer("Spawns").objects;
         spawnObjects.forEach(obj => {
             let x = obj.x;
@@ -83,7 +83,7 @@ class Play extends Phaser.Scene {
             }
         });
 
-        // 7. MAP OVERLAP RECOGNIZERS
+        // MAP OVERLAP RECOGNIZERS
         this.physics.add.overlap(this.player, this.keys, (player, key) => {
             this.sound.play("sfx_coin"); 
             this.inventory[key.keyColor] = true;
@@ -117,7 +117,7 @@ class Play extends Phaser.Scene {
             this.physics.add.overlap(this.player, this.exitZone, () => this.scene.start("gameOverScene", { outcome: "win" }));
         }
 
-        // 8. INTERFACE HUD & CAMERA SETUP
+        // INTERFACE HUD & CAMERA SETUP
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.cameras.main.startFollow(this.player, true, 1.0, 1.0);
         this.cameras.main.setDeadzone(120, 60);
@@ -128,9 +128,7 @@ class Play extends Phaser.Scene {
             this.hudHearts.push(heart);
         }
 
-        // --- FIXED: VISUAL INVENTORY HUD PANEL COLORS ---
         this.inventoryPanel = this.add.nineslice(16, 55, "ui_panel", null, 260, 100, 20, 20, 20, 20).setOrigin(0, 0).setScrollFactor(0).setDepth(30);
-        // Changed to charcoal black for clear legibility on the light gray board layer
         this.inventoryTitle = this.add.text(146, 62, "Inventory", { fontSize: '15px', fill: '#1a1a1a', fontFamily: 'MedievalSharp', fontWeight: 'bold' }).setOrigin(0.5, 0).setScrollFactor(0).setDepth(31);
         
         this.slots = [];
@@ -153,13 +151,10 @@ class Play extends Phaser.Scene {
 
         // Prompt Notification Plate Setup
         this.promptUIBox = this.add.nineslice(400, 250, "ui_button", null, 200, 50, 15, 15, 15, 15).setOrigin(0.5).setScrollFactor(0).setVisible(false).setDepth(10);
-        // Changed to obsidian dark brown text format
         this.promptText = this.add.text(400, 250, "", { fontSize: '16px', fill: '#1a1a1a', fontFamily: 'MedievalSharp', fontWeight: 'bold' }).setOrigin(0.5).setScrollFactor(0).setDepth(11);
         
-        // --- FIXED: CINEMATIC RPG BOTTOM NARRATIVE DIALOGUE LAYOUT ---
-        // Moved down to y: 500 and widened to 720px to prevent colliding with top inventory arrays!
+
         this.storyUIBox = this.add.nineslice(400, 500, "ui_panel", null, 720, 140, 20, 20, 20, 20).setOrigin(0.5).setScrollFactor(0).setVisible(false).setDepth(40);
-        // Changed fill style to high-contrast absolute black (#1a1a1a) for maximum crisp readability
         this.storyUIText = this.add.text(400, 500, "", {
             fontFamily: 'MedievalSharp',
             fontSize: '16px',

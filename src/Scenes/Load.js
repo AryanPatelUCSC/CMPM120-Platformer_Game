@@ -15,18 +15,10 @@ class Load extends Phaser.Scene {
         this.load.atlasXML("enemies", "spritesheet-enemies-default.png", "spritesheet-enemies-default.xml");
         this.load.atlasXML("backgrounds", "spritesheet-backgrounds-default.png", "spritesheet-backgrounds-default.xml");
 
-        // --- SPECIFIC KENNEY FANTASY UI SHEET SEPARATIONS ---
-        // Main structural slate container board
-        // Circled Left Box: Gray-filled main slate plate container background
+
         this.load.image("ui_panel", "kenney_fantasy-ui-borders/PNG/Default/Transparent center/panel-transparent-center-022.png");
-        
-        // Circled Middle-Right Box: Solid inset panel frames used for the inventory slot grids
         this.load.image("ui_slot", "kenney_fantasy-ui-borders/PNG/Default/Transparent center/panel-transparent-center-008.png");
-        
-        // Circled Middle-Right Box: Double-outlined interactive selection buttons
         this.load.image("ui_button", "kenney_fantasy-ui-borders/PNG/Default/Transparent center/panel-transparent-center-020.png");
-        
-        // Circled Bottom-Right Box: Horizontal lines with cross-ornaments used for header titles
         this.load.image("ui_divider", "kenney_fantasy-ui-borders/PNG/Default/Divider Fade/divider-fade-000.png");
 
         // Generate particle footprint texture
