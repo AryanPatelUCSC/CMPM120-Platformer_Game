@@ -4,8 +4,8 @@ class GameOver extends Phaser.Scene {
     }
 
     init(data) {
-        // 'win' or 'death' passed from Play.js
-        this.outcome = data.outcome; 
+        // Safe check: default to 'death' if data wasn't passed properly
+        this.outcome = (data && data.outcome) ? data.outcome : 'death'; 
     }
 
     create() {
@@ -31,6 +31,7 @@ class GameOver extends Phaser.Scene {
         }).setOrigin(0.5);
 
         // Restart listener
+        // Phaser cleans up this local input registry automatically when transitioning scenes
         this.input.keyboard.on('keydown-R', () => {
             this.scene.start('playScene');
         });
