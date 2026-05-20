@@ -15,7 +15,21 @@ class Load extends Phaser.Scene {
         this.load.atlasXML("enemies", "spritesheet-enemies-default.png", "spritesheet-enemies-default.xml");
         this.load.atlasXML("backgrounds", "spritesheet-backgrounds-default.png", "spritesheet-backgrounds-default.xml");
 
-        // Generate particle texture
+        // --- SPECIFIC KENNEY FANTASY UI SHEET SEPARATIONS ---
+        // Main structural slate container board
+        // Circled Left Box: Gray-filled main slate plate container background
+        this.load.image("ui_panel", "kenney_fantasy-ui-borders/PNG/Default/Transparent center/panel-transparent-center-022.png");
+        
+        // Circled Middle-Right Box: Solid inset panel frames used for the inventory slot grids
+        this.load.image("ui_slot", "kenney_fantasy-ui-borders/PNG/Default/Transparent center/panel-transparent-center-008.png");
+        
+        // Circled Middle-Right Box: Double-outlined interactive selection buttons
+        this.load.image("ui_button", "kenney_fantasy-ui-borders/PNG/Default/Transparent center/panel-transparent-center-020.png");
+        
+        // Circled Bottom-Right Box: Horizontal lines with cross-ornaments used for header titles
+        this.load.image("ui_divider", "kenney_fantasy-ui-borders/PNG/Default/Divider Fade/divider-fade-000.png");
+
+        // Generate particle footprint texture
         let g = this.make.graphics({x: 0, y: 0, add: false});
         g.fillStyle(0xffffff, 0.8).fillCircle(4, 4, 4);
         g.generateTexture('dust', 8, 8);
@@ -34,56 +48,31 @@ class Load extends Phaser.Scene {
     }
 
     create() {
-        // 1. Walking Animation (The two frames on the bottom row)
+        // --- PLAYER BEIGE ASTRONAUT ANIMATIONS ---
         this.anims.create({
             key: 'walk',
-            frames: [
-                { key: 'characters', frame: 'character_beige_walk_a' },
-                { key: 'characters', frame: 'character_beige_walk_b' }
-            ],
-            frameRate: 10,
-            repeat: -1
+            frames: [{ key: 'characters', frame: 'character_beige_walk_a' }, { key: 'characters', frame: 'character_beige_walk_b' }],
+            frameRate: 10, repeat: -1
         });
-
-        // 2. Climbing Animation (The first two frames on the top row)
         this.anims.create({
             key: 'climb',
-            frames: [
-                { key: 'characters', frame: 'character_beige_climb_a' },
-                { key: 'characters', frame: 'character_beige_climb_b' }
-            ],
-            frameRate: 8,
-            repeat: -1
+            frames: [{ key: 'characters', frame: 'character_beige_climb_a' }, { key: 'characters', frame: 'character_beige_climb_b' }],
+            frameRate: 8, repeat: -1
         });
-
-        // 3. Idle Animation (Standard side-facing profile)
         this.anims.create({
-            key: 'idle',
-            frames: [{ key: 'characters', frame: 'character_beige_idle' }]
+            key: 'idle', frames: [{ key: 'characters', frame: 'character_beige_idle' }]
         });
-
-        // 4. Jump Animation (Single-frame dynamic aerial pose)
         this.anims.create({
-            key: 'jump',
-            frames: [{ key: 'characters', frame: 'character_beige_jump' }]
+            key: 'jump', frames: [{ key: 'characters', frame: 'character_beige_jump' }]
         });
-
-        // 5. Duck Animation (Crouching state)
         this.anims.create({
-            key: 'duck',
-            frames: [{ key: 'characters', frame: 'character_beige_duck' }]
+            key: 'duck', frames: [{ key: 'characters', frame: 'character_beige_duck' }]
         });
-
-        // 6. Front Animation (Facing the screen directly)
         this.anims.create({
-            key: 'front',
-            frames: [{ key: 'characters', frame: 'character_beige_front' }]
+            key: 'front', frames: [{ key: 'characters', frame: 'character_beige_front' }]
         });
-
-        // 7. Hit Animation (Knockback / Damage frame)
         this.anims.create({
-            key: 'hit',
-            frames: [{ key: 'characters', frame: 'character_beige_hit' }]
+            key: 'hit', frames: [{ key: 'characters', frame: 'character_beige_hit' }]
         });
 
         // --- ENEMY INFRASTRUCTURE ANIMATIONS ---
@@ -127,6 +116,6 @@ class Load extends Phaser.Scene {
             });
         });
 
-        this.scene.start("playScene");
+        this.scene.start("menuScene");
     }
 }

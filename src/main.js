@@ -2,7 +2,10 @@ const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    pixelArt: true, // Prevents blurring of pixel art
+    pixelArt: true, 
+    render: {
+        roundPixels: true // Prevents sub-pixel movement jitter on the player during fast motions
+    },
     physics: {
         default: 'arcade',
         arcade: {
@@ -10,7 +13,7 @@ const config = {
             debug: false
         }
     },
-    scene: [Load, Play, GameOver]
+    scene: [Load, Menu, Play, GameOver]
 };
 
 const game = new Phaser.Game(config);
